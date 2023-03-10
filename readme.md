@@ -8,6 +8,7 @@ Technologies Used
 
 -   CSS (Bootstrap)
 -   JavaScript (Monaco Editor)
+-   Emmet Monaco
 
 Features
 --------
@@ -36,3 +37,4 @@ Credits
 
 -   [Bootstrap](https://getbootstrap.com/)
 -   [Monaco Editor](https://microsoft.github.io/monaco-editor/)
+-   [Emmet Monaco](https://github.com/troy351/emmet-monaco-es)
