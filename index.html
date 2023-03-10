@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Editor</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Monaco Editor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.36.1/min/vs/loader.js"></script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+</head>
+<body>
+<div class="container-fluid">
+  <div class="d-flex gap-1">
+    <button type="button" class="btn btn-outline-dark btn-sm rounded-0 border-0" id="open-button">
+      <i class="fa-regular fa-folder-open"></i>
+      Open File
+    </button>
+    <button type="button" class="btn btn-sm btn-outline-primary
+rounded-0 border-0" id="save-button">
+      <i class="fa-regular fa-floppy-disk"></i>
+      Save File
+    </button>
+    <div class="input-group input-group-sm border-0 p-0" style="max-width: 300px;">
+      <span class="input-group-text rounded-0 py-0 px-2">File Name:</span>
+      <input type="text" placeholder="File Name" class="form-control p-0" id="file-name-input">
+    </div>
+    <div class="dropdown ms-auto">
+      <button class="btn dropdown-toggle btn-sm btn-dark rounded-0 border-0" type="button" id="theme-dropdown" data-bs-toggle="dropdown" aria-expanded="false"> Theme </button>
+      <ul class="dropdown-menu" aria-labelledby="theme-dropdown">
+        <li><a class="dropdown-item" href="#" data-value="vs-dark">Dark</a></li>
+        <li><a class="dropdown-item" href="#" data-value="vs">Light</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-7">
+      <div id="editor" class="rounded-3 w-100" style="height: 500px;"></div>
+    </div>
+    <div class="col-md-5">
+      <iframe class="w-100" id="preview" style="height: 500px;"></iframe>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+  const preview = document.getElementById("preview").contentWindow.document;
+let editorCode = "<p>Hello World</p>";
+
+// Initialize Monaco Editor
+require.config({
+  paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.36.1/min/vs" }
+});
+require(["vs/editor/editor.main"], function () {
+  var editor = monaco.editor.create(document.getElementById("editor"), {
+    value: editorCode,
+    language: "html",
+    theme: "vs-dark"
+  });
+
+  // Theme switcher
+  var themeDropdown = document.getElementById("theme-dropdown");
+  var themeItems = document.querySelectorAll(".dropdown-item");
+  themeItems.forEach(function (item) {
+    item.addEventListener("click", function () {
+      var theme = item.getAttribute("data-value");
+      monaco.editor.setTheme(theme);
+      themeDropdown.innerHTML = item.innerHTML;
+    });
+  });
+
+  // Save button
+  var saveButton = document.getElementById("save-button");
+  saveButton.addEventListener("click", function () {
+    var value = editor.getValue();
+    var fileName = document.getElementById("file-name-input").value;
+    if (fileName === "") {
+      fileName = "my-file.html";
+    }
+    var file = new File([value], fileName, {
+      type: "text/html;charset=utf-8"
+    });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(file);
+    link.download = file.name;
+    link.click();
+  });
+});
+
+// Open button
+
+var openButton = document.getElementById("open-button");
+openButton.addEventListener("click", function () {
+  var input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".txt,.js,.html,.css";
+  input.addEventListener("change", function () {
+    var file = input.files[0];
+    var reader = new FileReader();
+    reader.onload = function () {
+      monaco.editor.getModels()[0].setValue(reader.result);
+    };
+    reader.readAsText(file);
+  });
+  input.click();
+});
+
+preview.body.innerHTML = editorCode;
+
+editor.addEventListener("keyup", function () {
+  preview.body.innerHTML = monaco.editor.getModels()[0].getValue();
+});
+  </script>
+
+</body>
+</html>
