@@ -59,7 +59,46 @@ rounded-0 border-0" id="save-button">
 
   <script>
     const preview = document.getElementById("preview").contentWindow.document;
-    let editorCode = "<p>Hello World</p>";
+    let editorCode = `<h1 id="quick-editor">Quick Editor</h1>
+<p>Quick Editor is a simple web application that allows you to edit HTML, CSS, and JavaScript code in a Monaco
+    Editor, and preview the result in real-time.</p>
+<h2 id="technologies-used">Technologies Used</h2>
+<ul>
+    <li>CSS (Bootstrap)</li>
+    <li>JavaScript (Monaco Editor)</li>
+    <li>Emmet Monaco</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+    <li>Open and edit files with the <code>.html</code>, <code>.css</code>, <code>.js</code>, and <code>.txt</code>
+        extensions.</li>
+    <li>Save edited files with a custom file name.</li>
+    <li>Preview the result in a separate iframe.</li>
+    <li>Switch between a light and dark theme.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>No installation is required. Simply download the HTML file and open it in a web browser or visit <a
+        href="https://github.com/threehymns/quick-editor">https://github.com/threehymns/quick-editor</a>.</p>
+<h2 id="usage">Usage</h2>
+<ul>
+    <li>Click the &quot;Open File&quot; button to open a file.</li>
+    <li>Click the &quot;Save File&quot; button to save the edited file.</li>
+    <li>Enter a custom file name (optional).</li>
+    <li>Click the &quot;Theme&quot; dropdown to switch between a light and dark theme.</li>
+    <li>Preview the result in the separate iframe.</li>
+</ul>
+<h2 id="credits">Credits</h2>
+<ul>
+    <li><a href="https://getbootstrap.com/">Bootstrap</a></li>
+    <li><a href="https://microsoft.github.io/monaco-editor/">Monaco Editor</a></li>
+    <li><a href="https://github.com/troy351/emmet-monaco-es">Emmet Monaco</a></li>
+</ul>
+<style>
+    * {
+        font-family: system-ui, sans-serif;
+    }
+</style>
+`;
 
     // Initialize Monaco Editor
     require.config({
